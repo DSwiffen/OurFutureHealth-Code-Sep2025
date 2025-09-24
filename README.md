@@ -2,21 +2,27 @@
 Analysis code for a study assessing cardiometabolic comorbidity in affective disorders using data from the Our Future Health cohort. 
 
 PROJECT SUMMARY
+
 The goal of this project was to understand the association between cardiometabolic disorders and affective disorders in the Our Future Health cohort. To realise this, individuals with bipolar disorder, depressive disorders and anxiety disorders were compared to those with no history of mental health problems and both the prevalence and odds ratios of cardiometabolic disorders were calculated in each group and compared. Odds ratios were adjusted for a range of relevant sociodemographic, lifestyle and health-related covariates to quantify association of cardiometabolic comorbidity in affective disorders.  
 
 ASSOCIATED PUBLICATION
+
 Submitted.
 
 CONTACT
+
 For any questions, please contact Dr Duncan Swiffen (dswiffen@ed.ac.uk).
 
 DATA DICTIONARY
+
 A full description of variables used in the analysis can be found in the Our Future Health data dictionary, at this link: https://research.ourfuturehealth.org.uk/data-and-cohort/
 
 GENERAL APPROACH
+
 Three mutually-exclusive affective disorder groups - bipolar disorder, depressive disorders and anxiety disorders- are created and baseline sociodemographic, lifestyle and health-related factors are compared with a comparison group made up of participants with no mental health problems. Standardised total prevalence and sex-stratified prevalence of any cardiometabolic disorder, individual cardiometabolic disorders and cardiometabolic comorbidity are calculated within each group. Odds ratios are calculated via logistic regression models adjusted for relevant covariates. Further analysis is completed to establish the extent and the impact of missing data on the results and conclusions. 
 
 DESCRIPTION OF SCRIPTS
+
 Scripts are described below in the order in which they are run.
 
 01-cleaning.r cleans the raw data imported from Our Future Health into a format that is usable for the intended analysis. This involves merging two .csv files that were provided from the DNANexus Table Exporter tool, reassigning the columns names, creating an “age” column out of year of consent and year of birth, a single combined mooddisorder column containing four affective disorder groups, and a cardiometabolic disorder column containing all cardiometabolic disorders and obesity, which was taken from BMI calculated from height and weight data. 
