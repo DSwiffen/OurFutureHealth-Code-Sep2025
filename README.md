@@ -11,7 +11,7 @@ Submitted.
 
 CONTACT
 
-For any questions, please contact Dr Duncan Swiffen (dswiffen@ed.ac.uk).
+For any questions, please contact the lead investigator, Dr Duncan Swiffen (dswiffen@ed.ac.uk).
 
 DATA DICTIONARY
 
