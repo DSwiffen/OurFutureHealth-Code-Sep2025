@@ -174,24 +174,27 @@ write.csv(alldata, "alldata_hierarchy.csv", row.names = F)
 
 #Load libraries
 library(dplyr)
+library(tidyr)
 
 ## remove mooddisorder variable
-alldata <- alldata %>%
+alldata1 <- alldata %>%
   select(-mooddisorder)
 ## Create groups that allow overlapping diagnoses
-alldata <- alldata %>%
+alldata1 <- alldata1 %>%
   pivot_longer(cols = c(bipolar, depression, anxiety, control),
                names_to = "mooddisorder",
                values_to = "present") %>%
-  filter(present == TRUE)
+  filter(present == TRUE) %>%
+  mutate(mooddisorder = recode(mooddisorder,
+                               "control" = "comparison"))
 #Create .csv file from clean data with overlapping mooddisorder group
-write.csv(alldata, "alldata_overlapping.csv", row.names = F)
+write.csv(alldata1, "alldata_overlapping.csv", row.names = F)
 
 ## remove mooddisorder variable
-alldata <- alldata %>%
+alldata2 <- alldata %>%
   select(-mooddisorder)
 # Create columns that are TRUE is there is mooddisorder comorbidity
-alldata_filtered1 <- alldata %>%
+alldata_filtered1 <- alldata2 %>%
   mutate(bip_dep = ifelse(bipolar == TRUE & depression == TRUE, TRUE, FALSE)) %>%
   mutate(bip_anx = ifelse(bipolar == TRUE & anxiety == TRUE, TRUE, FALSE)) %>%
   mutate(dep_anx = ifelse(depression == TRUE & anxiety == TRUE, TRUE, FALSE)) %>%
@@ -207,7 +210,9 @@ alldata <- alldata %>%
   pivot_longer(cols = c(bipolar, depression, anxiety, control),
                names_to = "mooddisorder",
                values_to = "present") %>%
-  filter(present == TRUE)
+  filter(present == TRUE) %>%
+  mutate(mooddisorder = recode(mooddisorder,
+                               "control" = "comparison"))
 #Create .csv file from clean data with overlapping mooddisorder group
 write.csv(alldata, "alldata_exclusive.csv", row.names = F)
 
