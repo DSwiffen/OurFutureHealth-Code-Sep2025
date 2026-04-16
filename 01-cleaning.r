@@ -1,7 +1,7 @@
 ##Open in Python kernel
 %%bash
-dx download "all_outcomes_participants.csv"
-dx download "all_outcomes_questionnaire.csv"
+dx download "/v_03_dataset/all_outcomes_participant.csv"
+dx download "/v_03_dataset/all_outcomes_questionnaire.csv"
 
 # Read csv
 all_participant <- read.csv("all_outcomes_participant.csv")
@@ -171,6 +171,9 @@ write.csv(alldata, "alldata_hierarchy.csv", row.names = F)
 #############################################################################################################
 ############################ SENSITIVITY ANALYSES FOR PEER REVIEW ###########################################
 #############################################################################################################
+
+#Load libraries
+library(dplyr)
 
 ## remove mooddisorder variable
 alldata <- alldata %>%
