@@ -160,38 +160,39 @@ alldata$mooddisorder[alldata$depression == TRUE & alldata$bipolar == FALSE] <- '
 alldata$mooddisorder[alldata$anxiety == TRUE & alldata$depression == FALSE & alldata$bipolar == FALSE] <- 'Anxiety'
 alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
 
+#Create .csv file from clean data with hierarchical mooddisorder group
+write.csv(alldata, "alldata_clean.csv", row.names = F)
+
 #############################################################################################################
 ############################ SENSITIVITY ANALYSES FOR PEER REVIEW ###########################################
 #############################################################################################################
 
+## remove mooddisorder variable
+alldata <- alldata %>%
+  select(-mooddisorder)
 ## Create groups that allow overlapping diagnoses
-alldata$mooddis_overlap[alldata$bipolar == TRUE] <- 'Bipolar'
-alldata$mooddis_overlap[alldata$depression == TRUE] <- 'Depression'
-alldata$mooddis_overlap[alldata$anxiety == TRUE] <- 'Anxiety'
-alldata$mooddis_overlap[alldata$control == TRUE] <- 'Comparison'
+alldata$mooddisorder[alldata$bipolar == TRUE] <- 'Bipolar'
+alldata$mooddisorder[alldata$depression == TRUE] <- 'Depression'
+alldata$mooddisorder[alldata$anxiety == TRUE] <- 'Anxiety'
+alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
+#Create .csv file from clean data with overlapping mooddisorder group
+write.csv(alldata, "alldata_overlapping.csv", row.names = F)
 
+## remove mooddisorder variable
+alldata <- alldata %>%
+  select(-mooddisorder)
 ## Create a variable that is TRUE for participants with more than one mooddisorder diagnosis
 alldata <- alldata %>%
   mutate(mooddis_comorb = ifelse(bipolar == TRUE & depression == TRUE, TRUE, FALSE) | 
            ifelse(bipolar == TRUE & anxiety == TRUE, TRUE, FALSE) |
            ifelse(depression == TRUE & anxiety == TRUE, TRUE, FALSE))
 # Filter out these participants 
-alldata_filtered <- alldata %>%
+alldata <- alldata %>%
   filter(mooddis_comorb == FALSE)
-
-## Create groups.
-#Called mooddis_overlap but there should be no overlapping groups in this variable
-alldata_filtered$mooddis_overlap[alldata$bipolar == TRUE] <- 'Bipolar'
-alldata_filtered$mooddis_overlap[alldata$depression == TRUE] <- 'Depression'
-alldata_filtered$mooddis_overlap[alldata$anxiety == TRUE] <- 'Anxiety'
-alldata_filtered$mooddis_overlap[alldata$control == TRUE] <- 'Comparison'
-
-
-#############################################################################################################
-############################################ END ############################################################
-#############################################################################################################
-
-
-#Create .csv file from clean data
-write.csv(alldata, "alldata_clean.csv", row.names = F)
-write.csv(alldata_filtered, "alldata_filtered_clean.csv", row.names = F)
+## Create groups called moodisorder with mutually exclusive participants
+alldata$mooddisorder[alldata$bipolar == TRUE] <- 'Bipolar'
+alldata$mooddisorder[alldata$depression == TRUE] <- 'Depression'
+alldata$mooddisorder[alldata$anxiety == TRUE] <- 'Anxiety'
+alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
+#Create .csv file from clean data with overlapping mooddisorder group
+write.csv(alldata, "alldata_filtered.csv", row.names = F)
