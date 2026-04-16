@@ -1,3 +1,8 @@
+##Open in Python kernel
+%%bash
+dx download "all_outcomes_participants.csv"
+dx download "all_outcomes_questionnaire.csv"
+
 # Read csv
 all_participant <- read.csv("all_outcomes_participant.csv")
 all_questionnaire <- read.csv("all_outcomes_questionnaire.csv")
@@ -161,7 +166,7 @@ alldata$mooddisorder[alldata$anxiety == TRUE & alldata$depression == FALSE & all
 alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
 
 #Create .csv file from clean data with hierarchical mooddisorder group
-write.csv(alldata, "alldata_clean.csv", row.names = F)
+write.csv(alldata, "alldata_hierarchy.csv", row.names = F)
 
 #############################################################################################################
 ############################ SENSITIVITY ANALYSES FOR PEER REVIEW ###########################################
@@ -195,4 +200,10 @@ alldata$mooddisorder[alldata$depression == TRUE] <- 'Depression'
 alldata$mooddisorder[alldata$anxiety == TRUE] <- 'Anxiety'
 alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
 #Create .csv file from clean data with overlapping mooddisorder group
-write.csv(alldata, "alldata_filtered.csv", row.names = F)
+write.csv(alldata, "alldata_exclusive.csv", row.names = F)
+
+##Switch to Python kernel
+%%bash
+dx upload "alldata_hierarchy.csv"
+dx upload "alldata_overlapping.csv"
+dx upload "alldata_exclusive.csv"
