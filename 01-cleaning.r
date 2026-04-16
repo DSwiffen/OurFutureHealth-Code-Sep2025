@@ -45,7 +45,41 @@ alldata$birth_year <- as.numeric(alldata$birth_year)
 alldata$age <- alldata$consent_year - alldata$birth_year
 alldata <- alldata[,c(1,ncol(alldata),2:(ncol(alldata)-1))] # bringing age to front of dataframe
 
+### Non mutually exclusive variables requiring prevalence outputs relabelled to include meaningful outcomes ###
 
+#Create new columns for endocrine diagnosis
+# TRUE if diag_endo contains the strings "Type 1 diabetes", "Type 2 diabetes",
+alldata$t2dm <- grepl("Type 2 diabetes", alldata$diag_endo, ignore.case = T)
+
+#Calculate BMI
+alldata$height <- alldata$height / 100 # convert to meters
+alldata$bmi <- alldata$weight/alldata$height^2
+# Categorise BMI output
+alldata$underweight <- ifelse(alldata$bmi <18.5, TRUE, FALSE)
+alldata$normal_weight <- ifelse((alldata$bmi >= 18.5 & alldata$bmi < 25), TRUE, FALSE)
+alldata$overweight <- ifelse((alldata$bmi >= 25 & alldata$bmi <30), TRUE, FALSE)
+alldata$obese <- ifelse(alldata$bmi >=30, TRUE, FALSE)
+
+#Create new columns for cardiovascular diagnosis
+# TRUE if diag_cvd contains the strings "Stroke", "Coronary artery", "Congestive heart failure", "High cholesterol", "Heart attack", "Chest pain", "High blood pressure"
+alldata$stroke<- grepl("Stroke", alldata$diag_cvd, ignore.case = T)
+alldata$cad <- grepl("Coronary artery", alldata$diag_cvd, ignore.case = T)
+alldata$chf<- grepl("Congestive heart failure", alldata$diag_cvd, ignore.case = T)
+alldata$hypercholesterolaemia<- grepl("High cholesterol", alldata$diag_cvd, ignore.case = T)
+alldata$mi <- grepl("Heart attack", alldata$diag_cvd, ignore.case = T)
+alldata$angina <- grepl("Chest pain", alldata$diag_cvd, ignore.case = T)
+alldata$hypertension <- grepl("High blood pressure", alldata$diag_cvd, ignore.case = T)
+
+alldata$cvd <- ifelse(alldata$t2dm == T |
+                        alldata$stroke == T |
+                        alldata$cad == T |
+                        alldata$chf == T |
+                        alldata$hypercholesterolaemia == T |
+                        alldata$mi == T |
+                        alldata$angina == T |
+                        alldata$hypertension == T |
+                        alldata$obese == T,
+                      TRUE, FALSE)
 
 ## Create new columns for mood disorders and "case" group
 # TRUE if diag_psych contains the strings "Anxiety", "Bipolar disorder", or "Depression"
@@ -158,43 +192,6 @@ alldata_filtered$mooddis_overlap[alldata$control == TRUE] <- 'Comparison'
 #############################################################################################################
 
 
-### Non mutually exclusive variables requiring prevalence outputs relabelled to include meaningful outcomes ###
-
-#Create new columns for endocrine diagnosis
-# TRUE if diag_endo contains the strings "Type 1 diabetes", "Type 2 diabetes",
-alldata$t2dm <- grepl("Type 2 diabetes", alldata$diag_endo, ignore.case = T)
-
-#Calculate BMI
-alldata$height <- alldata$height / 100 # convert to meters
-alldata$bmi <- alldata$weight/alldata$height^2
-# Categorise BMI output
-alldata$underweight <- ifelse(alldata$bmi <18.5, TRUE, FALSE)
-alldata$normal_weight <- ifelse((alldata$bmi >= 18.5 & alldata$bmi < 25), TRUE, FALSE)
-alldata$overweight <- ifelse((alldata$bmi >= 25 & alldata$bmi <30), TRUE, FALSE)
-alldata$obese <- ifelse(alldata$bmi >=30, TRUE, FALSE)
-
-#Create new columns for cardiovascular diagnosis
-# TRUE if diag_cvd contains the strings "Stroke", "Coronary artery", "Congestive heart failure", "High cholesterol", "Heart attack", "Chest pain", "High blood pressure"
-alldata$stroke<- grepl("Stroke", alldata$diag_cvd, ignore.case = T)
-alldata$cad <- grepl("Coronary artery", alldata$diag_cvd, ignore.case = T)
-alldata$chf<- grepl("Congestive heart failure", alldata$diag_cvd, ignore.case = T)
-alldata$hypercholesterolaemia<- grepl("High cholesterol", alldata$diag_cvd, ignore.case = T)
-alldata$mi <- grepl("Heart attack", alldata$diag_cvd, ignore.case = T)
-alldata$angina <- grepl("Chest pain", alldata$diag_cvd, ignore.case = T)
-alldata$hypertension <- grepl("High blood pressure", alldata$diag_cvd, ignore.case = T)
-
-alldata$cvd <- ifelse(alldata$t2dm == T |
-                        alldata$stroke == T |
-                        alldata$cad == T |
-                        alldata$chf == T |
-                        alldata$hypercholesterolaemia == T |
-                        alldata$mi == T |
-                        alldata$angina == T |
-                        alldata$hypertension == T |
-                        alldata$obese == T,
-                      TRUE, FALSE)
-
-
-
 #Create .csv file from clean data
 write.csv(alldata, "alldata_clean.csv", row.names = F)
+write.csv(alldata_filtered, "alldata_filtered_clean.csv", row.names = F)
