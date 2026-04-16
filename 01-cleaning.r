@@ -126,6 +126,38 @@ alldata$mooddisorder[alldata$depression == TRUE & alldata$bipolar == FALSE] <- '
 alldata$mooddisorder[alldata$anxiety == TRUE & alldata$depression == FALSE & alldata$bipolar == FALSE] <- 'Anxiety'
 alldata$mooddisorder[alldata$control == TRUE] <- 'Comparison'
 
+#############################################################################################################
+############################ SENSITIVITY ANALYSES FOR PEER REVIEW ###########################################
+#############################################################################################################
+
+## Create groups that allow overlapping diagnoses
+alldata$mooddis_overlap[alldata$bipolar == TRUE] <- 'Bipolar'
+alldata$mooddis_overlap[alldata$depression == TRUE] <- 'Depression'
+alldata$mooddis_overlap[alldata$anxiety == TRUE] <- 'Anxiety'
+alldata$mooddis_overlap[alldata$control == TRUE] <- 'Comparison'
+
+## Create a variable that is TRUE for participants with more than one mooddisorder diagnosis
+alldata <- alldata %>%
+  mutate(mooddis_comorb = ifelse(bipolar == TRUE & depression == TRUE, TRUE, FALSE) | 
+           ifelse(bipolar == TRUE & anxiety == TRUE, TRUE, FALSE) |
+           ifelse(depression == TRUE & anxiety == TRUE, TRUE, FALSE))
+# Filter out these participants 
+alldata_filtered <- alldata %>%
+  filter(mooddis_comorb == FALSE)
+
+## Create groups.
+#Called mooddis_overlap but there should be no overlapping groups in this variable
+alldata_filtered$mooddis_overlap[alldata$bipolar == TRUE] <- 'Bipolar'
+alldata_filtered$mooddis_overlap[alldata$depression == TRUE] <- 'Depression'
+alldata_filtered$mooddis_overlap[alldata$anxiety == TRUE] <- 'Anxiety'
+alldata_filtered$mooddis_overlap[alldata$control == TRUE] <- 'Comparison'
+
+
+#############################################################################################################
+############################################ END ############################################################
+#############################################################################################################
+
+
 ### Non mutually exclusive variables requiring prevalence outputs relabelled to include meaningful outcomes ###
 
 #Create new columns for endocrine diagnosis
