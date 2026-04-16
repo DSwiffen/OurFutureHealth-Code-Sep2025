@@ -174,7 +174,7 @@ alldata <- alldata[complete.cases(alldata[, c("age", "ethnicity", "sex", "housin
 ## Convert relevant variables to factors
 factorcols <- c("mooddisorder", "sex", "ethnicity", "housing_income", "smoking", "alcohol_curr", "degree", "sleep_chronotype", "work_status", "activity_type")
 alldata[factorcols] <- lapply(alldata[factorcols], as.factor)
-alldata$mooddisorder <- relevel(alldata$mooddisorder, ref = "Comparison")
+alldata$mooddisorder <- relevel(alldata$mooddisorder, ref = "comparison")
 alldata$sex <- relevel(alldata$sex, ref = "Female")
 alldata$ethnicity <- relevel(alldata$ethnicity, ref = "White")
 alldata$housing_income <- relevel(alldata$housing_income, ref = "More than £100,000")
