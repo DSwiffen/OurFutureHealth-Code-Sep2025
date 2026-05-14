@@ -205,7 +205,7 @@ alldata_filtered2 <- alldata_filtered1 %>%
 # Filter out these participants 
 alldata <- alldata_filtered2 %>%
   filter(mooddis_comorb == FALSE)
-## Create groups called moodisorder with mutually exclusive participants
+## Create groups called mooddisorder with mutually exclusive participants
 alldata <- alldata %>%
   pivot_longer(cols = c(bipolar, depression, anxiety, control),
                names_to = "mooddisorder",
