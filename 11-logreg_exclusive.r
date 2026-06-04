@@ -1,9 +1,15 @@
+############### Code for sensitivity analysis in which logistic regression is run on OFH participants with no affective disorder comorbidity only ################
+##################################################################################################################################################################
+
+### To be run after 10-sensitiivty_cleaning ###
+
+## Load libraries
 library(dplyr)
 library(tidyr)
 
 rm(list = ls())
 
-## Switch to R kernel
+## Read csv
 alldata <- read.csv("alldata_exclusive.csv")
 
 # Remove missing data from mooddisorder
