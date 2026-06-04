@@ -19,7 +19,7 @@ A full description of variables used in the analysis can be found in the Our Fut
 
 GENERAL APPROACH
 
-Three mutually-exclusive affective disorder groups - bipolar disorder, depressive disorders and anxiety disorders- are created and baseline sociodemographic, lifestyle and health-related factors are compared with a comparison group made up of participants with no mental health problems. Standardised total prevalence and sex-stratified prevalence of any cardiometabolic disorder, individual cardiometabolic disorders and cardiometabolic comorbidity are calculated within each group. Odds ratios are calculated via logistic regression models adjusted for relevant covariates. Further analysis is completed to establish the extent and the impact of missing data on the results and conclusions. 
+Three mutually-exclusive affective disorder groups - bipolar disorder, depressive disorders and anxiety disorders- and a comparison group of people with no mental health problems are created and baseline sociodemographic, lifestyle and health-related factors are compared between groups. Standardised total prevalence and sex-stratified prevalence of any cardiometabolic disorder, individual cardiometabolic disorders and cardiometabolic comorbidity are calculated within each group. Odds ratios are calculated via logistic regression models adjusted for relevant covariates. Further analysis is completed to establish the extent and the impact of missing data on the results and conclusions, as well as a sensitivity analysis assessing the effect of allowing comorbidibity of affective disorders within groups. m
 
 DESCRIPTION OF SCRIPTS
 
@@ -42,3 +42,7 @@ Scripts are described below in the order in which they are run.
 08-cont_comp_vs_incomp.r contains code that initially cleans and creates composite factors for the variables of interest, and then separates out the total sample into “complete” cases and “incomplete” cases (i.e. cases that have no missing data and those that are missing data in at least one of the included variables). Outputs for the continuous variables (in this case, only age) are then calculated for the complete and incomplete cases separately. 
 
 09-cat_comp_vs_incomp.r contains code that initially cleans and creates composite factors for the variables of interest, and then separates out the total sample into “complete” cases and “incomplete” cases. Outputs for the categorical variables are then calculated for the complete and incomplete cases separately.
+
+10-sensitivity_cleaning.r creates a csv file made up of participants who have self-reported only one affective disorder. Those that have self-reported a history of any combination of >1 of bipolar disorder, depressive disorders or anxiety disorders have been removed prior to creation of the csv
+
+11-logreg_exclusive.r contains code for the same logistic regression models outlined in 06-logreg.r except completed on the data generated from 10-sensitivity_cleaning.r. This is a sensitivity analysis to determine the effect of our hierarchical approach to categorising the four affective disorder groups. 
